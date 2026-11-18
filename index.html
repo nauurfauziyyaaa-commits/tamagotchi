@@ -443,24 +443,6 @@ for (let i = 0; i < 8; i++){
 }
 $("timbangan").onclick = () => { layar = "utama"; render(); };   // klik layar timbangan = tutup
 
-/* ================= CEK GAMBAR HILANG ================= */
-// nama cadangan kalau file di folder img namanya sedikit berbeda
-const CADANGAN = { tidur: ["karakter_tidur.png", "karakter tidur.png", "karakter-tidur.png"] };
-const hilang = new Set();
-addEventListener("error", e => {
-  const el = e.target;
-  if (!el || el.tagName !== "IMG") return;
-  const nama = decodeURIComponent(el.src.split("/").pop());
-  if (el.id === "karakter"){
-    const pose = poseSekarang(), c = CADANGAN[pose];
-    if (c && c.length){ POSE[pose] = c.shift(); render(); return; }   // coba nama lain
-  }
-  hilang.add(nama);
-  $("galat").textContent = "Gambar tidak ditemukan: " + [...hilang].join(", ") +
-    " — cek nama file di folder img (huruf kecil, tanpa spasi).";
-  $("galat").style.display = "block";
-}, true);
-
 /* ================= UKURAN LAYAR ================= */
 const TELUR = { x:278, y:380, w:575, h:668 };   // area telur di kanvas
 function atur(){
