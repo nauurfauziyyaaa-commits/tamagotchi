@@ -87,9 +87,9 @@ body{ margin:0; height:100vh; display:grid; place-items:center; background:#eef0
     <div id="gelap"></div>
 
     <!-- 3 tombol di cangkang (menimpa tombol biru) -->
-    <button class="tb" id="tb1" style="left:406px; top:861px" aria-label="Pindah pilihan"></button>
-    <button class="tb" id="tb2" style="left:536px; top:876px" aria-label="Pilih"></button>
-    <button class="tb" id="tb3" style="left:663px; top:860px" aria-label="Kembali"></button>
+<button class="tb" id="tb1" style="left:406px; top:861px" aria-label="Sebelumnya"></button>
+<button class="tb" id="tb2" style="left:536px; top:876px" aria-label="Pilih"></button>
+<button class="tb" id="tb3" style="left:663px; top:860px" aria-label="Berikutnya"></button>
   </div>
 </div>
 
@@ -414,16 +414,21 @@ setInterval(() => {
 }, 1000);
 
 /* ================= TOMBOL ================= */
-const kiri   = () => { if (layar === "utama"){ kursor = (kursor + 1) % 8; bunyi("klik"); render(); } };
+const sebelumnya = () => { if (layar === "status"){ layar = "utama"; render(); } else { kursor = (kursor + 7) % 8; bunyi("klik"); render(); } };
+const berikutnya = () => { if (layar === "status"){ layar = "utama"; render(); } else { kursor = (kursor + 1) % 8; bunyi("klik"); render(); } };
 const tengah = () => { if (layar === "status"){ layar = "utama"; render(); } else aksi(kursor); };
-const kanan  = () => { if (layar === "status"){ layar = "utama"; render(); } };
-$("tb1").onclick = kiri; $("tb2").onclick = tengah; $("tb3").onclick = kanan;
-document.addEventListener("keydown", e => {
-  if (e.key === "ArrowRight" || e.key === "a") kiri();
-  if (e.key === "Enter"      || e.key === "s") tengah();
-  if (e.key === "Escape"     || e.key === "d") kanan();
-});
 
+$("tb1").onclick = sebelumnya; 
+$("tb2").onclick = tengah;     
+$("tb3").onclick = berikutnya; 
+
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft"  || e.key === "a") sebelumnya();
+  if (e.key === "ArrowRight" || e.key === "d") berikutnya();
+  if (e.key === "Enter"      || e.key === "s") tengah();
+  if (e.key === "Escape" && layar === "status"){ layar = "utama"; render(); }
+});
+   
 /* ikon juga bisa langsung di-klik/tap */
 const zonaIkon = [];
 for (let i = 0; i < 8; i++){
